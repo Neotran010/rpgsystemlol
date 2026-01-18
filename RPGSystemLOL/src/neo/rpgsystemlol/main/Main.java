@@ -1,6 +1,10 @@
 package neo.rpgsystemlol.main;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import neo.rpgsystem.integration.mmocore.MMOCoreIntegration;
 
 public class Main extends JavaPlugin {
 	
@@ -10,6 +14,14 @@ public class Main extends JavaPlugin {
 	
 	public void onEnable() {
 		pl = this;
+		
+		// Khởi động MMOCore integration sau 1 tick để đảm bảo các plugin khác đã load
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				MMOCoreIntegration.setup();
+			}
+		}.runTaskLater(this, 1);
 	}
 
 }

@@ -176,7 +176,9 @@ public class HumansActive1Handler extends SkillHandler<SimpleSkillResult> {
                     r += 0.1;
                 }
                 for (int i = 0; i < 3; i++) {
-                    Location loc2 = getCirclePoint(loc, d + i * Math.PI * 2 / 3, r);
+                    // Use getCircleLocation from Particles with a simple vector
+                    double angle = d + i * Math.PI * 2 / 3;
+                    Location loc2 = Particles.getCircleLocation(loc, loc.getDirection(), angle, r);
                     Particles.spawnParticleColor(loc2, Particle.DUST_COLOR_TRANSITION, neoParticleColor.AQUA);
                 }
             }
@@ -197,14 +199,5 @@ public class HumansActive1Handler extends SkillHandler<SimpleSkillResult> {
         if (level < 1) level = 1;
         if (level > 10) level = 10;
         return 6 + (level - 1) * 4 / 9; // Linear scale, min 6, max 10
-    }
-    
-    /**
-     * Helper method để lấy điểm trên đường tròn
-     */
-    private Location getCirclePoint(Location center, double angle, double radius) {
-        double x = Math.cos(angle) * radius;
-        double z = Math.sin(angle) * radius;
-        return center.clone().add(x, 0, z);
     }
 }

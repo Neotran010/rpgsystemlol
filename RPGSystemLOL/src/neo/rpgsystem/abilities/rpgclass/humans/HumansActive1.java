@@ -19,6 +19,11 @@ import neo.rpgsystemlol.main.Particles.neoParticleColor;
 
 // Assumes BoostNeoSkill, BoostNeoSkillType, neoParticleColor, Main, Particles, PotionsBoostData, BoostData are defined.
 
+/**
+ * @deprecated This class is deprecated. Please use {@link neo.rpgsystem.abilities.mmocore.humans.HumansActive1Handler} 
+ * which integrates with MMOCore/MythicLib skill system.
+ */
+@Deprecated
 public class HumansActive1 extends BoostNeoSkill {
 
     public HumansActive1() {

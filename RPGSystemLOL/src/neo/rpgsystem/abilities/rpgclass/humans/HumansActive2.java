@@ -13,6 +13,11 @@ import neo.rpgsystemlol.main.DamageU;
 import neo.rpgsystemlol.main.Main;
 import neo.rpgsystemlol.main.Particles;
 
+/**
+ * @deprecated This class is deprecated. Please use {@link neo.rpgsystem.abilities.mmocore.humans.HumansActive2Handler} 
+ * which integrates with MMOCore/MythicLib skill system.
+ */
+@Deprecated
 public class HumansActive2 extends CostConditionSkills {
 
     // Enum cho các sound sử dụng trong skill

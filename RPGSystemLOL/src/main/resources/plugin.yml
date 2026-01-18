@@ -1,0 +1,8 @@
+name: RPGSystemLOL
+version: 1.0.0
+main: neo.rpgsystemlol.main.Main
+api-version: 1.16
+softdepend:
+  - MythicLib
+  - MMOCore
+  - MMOItems

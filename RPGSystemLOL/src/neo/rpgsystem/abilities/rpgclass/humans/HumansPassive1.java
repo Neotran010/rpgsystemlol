@@ -17,6 +17,11 @@ import neo.rpgsystemlol.main.DamageU;
 import neo.rpgsystemlol.main.Main;
 import neo.rpgsystemlol.main.Particles;
 
+/**
+ * @deprecated This class is deprecated. Please use {@link neo.rpgsystem.abilities.mmocore.humans.HumansPassive1Handler} 
+ * which integrates with MMOCore/MythicLib skill system.
+ */
+@Deprecated
 public class HumansPassive1 extends CooldownSkills {
 
     public HumansPassive1(String name, String displayName, boolean msg) {

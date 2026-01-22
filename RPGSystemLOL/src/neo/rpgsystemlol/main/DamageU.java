@@ -35,13 +35,47 @@ public class DamageU {
 	}
 	
 	public static boolean isTarget(Player p, LivingEntity le) {
-		//TODO hook party...
+		// Không target chính mình
+		if (le.equals(p)) return false;
+		
+		// Không target player cùng party (nếu có MMOCore)
+		if (le instanceof Player) {
+			Player target = (Player) le;
+			if (neo.rpgsystem.integration.mmocore.MMOCoreIntegration.isMMOCoreAvailable()) {
+				try {
+					net.Indyuce.mmocore.api.player.PlayerData pData = 
+						net.Indyuce.mmocore.api.player.PlayerData.get(p);
+					net.Indyuce.mmocore.api.player.PlayerData tData = 
+						net.Indyuce.mmocore.api.player.PlayerData.get(target);
+					if (pData.hasParty() && tData.hasParty()) {
+						if (pData.getParty().equals(tData.getParty())) {
+							return false; // Cùng party
+						}
+					}
+				} catch (Exception ignored) {}
+			}
+		}
 		return true;
 	}
 
 	public static void damageSkill(Player caster, LivingEntity le, double rawdamage) {
-		//TODO damage custom with MMOCore
-		le.damage(rawdamage, le); 
+		if (neo.rpgsystem.integration.mmocore.MMOCoreIntegration.isMythicLibAvailable()) {
+			try {
+				// Sử dụng MythicLib damage system
+				io.lumine.mythic.lib.api.player.MMOPlayerData mmoCaster = 
+					io.lumine.mythic.lib.api.player.MMOPlayerData.get(caster);
+				io.lumine.mythic.lib.damage.DamageMetadata damage = 
+					new io.lumine.mythic.lib.damage.DamageMetadata(rawdamage, 
+						io.lumine.mythic.lib.damage.DamageType.SKILL);
+				io.lumine.mythic.lib.damage.AttackMetadata attack = 
+					new io.lumine.mythic.lib.damage.AttackMetadata(damage, le, mmoCaster.getStatMap().cache());
+				attack.damage(le);
+				return;
+			} catch (Exception e) {
+				// Fallback to vanilla
+			}
+		}
+		le.damage(rawdamage, caster);
 	}
 	
 	public static void damageSkill(Player caster, List<LivingEntity> list, double rawdamage) {
@@ -56,8 +90,18 @@ public class DamageU {
 	 * @return
 	 */
 	public static double getDamage(Player p, double scale) {
-		//TODO hook mmocore
-		return 0;
+		double baseDamage = 10; // Base damage mặc định
+		
+		if (neo.rpgsystem.integration.mmocore.MMOCoreIntegration.isMythicLibAvailable()) {
+			try {
+				io.lumine.mythic.lib.api.player.MMOPlayerData mmoData = 
+					io.lumine.mythic.lib.api.player.MMOPlayerData.get(p);
+				// Lấy attack damage từ stats
+				baseDamage = mmoData.getStatMap().getStat("ATTACK_DAMAGE");
+			} catch (Exception ignored) {}
+		}
+		
+		return baseDamage * (scale / 100.0);
 	}
 	
 	public static void scaleDamageSkill(Player caster, LivingEntity le, double scaleDamage) {
@@ -95,12 +139,15 @@ public class DamageU {
 	}
 
 	public static void heal(Player p, double amount) {
-		//TODO heal
+		double maxHealth = p.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getValue();
+		double newHealth = Math.min(p.getHealth() + amount, maxHealth);
+		p.setHealth(newHealth);
 	}
 
-	public static void hatTung(LivingEntity entity, double d) {
-		// TODO Auto-generated method stub
-		
+	public static void hatTung(LivingEntity entity, double power) {
+		org.bukkit.util.Vector velocity = entity.getVelocity();
+		velocity.setY(power);
+		entity.setVelocity(velocity);
 	}
 
 	public static void taunt(LivingEntity target, Player p, int i) {
@@ -109,13 +156,16 @@ public class DamageU {
 		}
 	}
 
-	public static void slow(LivingEntity target, int i, int j) {
-		//TODO potion slow
+	public static void slow(LivingEntity target, int amplifier, int durationTicks) {
+		target.addPotionEffect(new org.bukkit.potion.PotionEffect(
+			org.bukkit.potion.PotionEffectType.SLOW, durationTicks, amplifier));
 	}
 
-	public static void addGiamSatThuong(Player p, int i, double d) {
-		// TODO Auto-generated method stub
-		
+	public static void addGiamSatThuong(Player p, int durationTicks, double percent) {
+		// Thêm resistance effect tương đương
+		int amplifier = (int) Math.min(4, percent / 20); // 20% = 1 level
+		p.addPotionEffect(new org.bukkit.potion.PotionEffect(
+			org.bukkit.potion.PotionEffectType.DAMAGE_RESISTANCE, durationTicks, amplifier));
 	}
 
 }

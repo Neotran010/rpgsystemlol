@@ -2,7 +2,31 @@ name: RPGSystemLOL
 version: 1.0.0
 main: neo.rpgsystemlol.main.Main
 api-version: 1.16
+author: Neotran010
+description: Hệ thống RPG Skills tích hợp MMOCore
+
 softdepend:
   - MythicLib
   - MMOCore
   - MMOItems
+
+commands:
+  rpg:
+    description: Lệnh chính của RPGSystemLOL
+    usage: /rpg <help|info|reload>
+    permission: rpgsystem.use
+  skill:
+    description: Quản lý kỹ năng
+    usage: /skill <cast|list|info> [tên]
+    permission: rpgsystem.skill
+
+permissions:
+  rpgsystem.use:
+    description: Cho phép sử dụng lệnh /rpg
+    default: true
+  rpgsystem.skill:
+    description: Cho phép sử dụng lệnh /skill
+    default: true
+  rpgsystem.admin:
+    description: Quyền admin (reload, etc.)
+    default: op

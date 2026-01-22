@@ -158,8 +158,34 @@ public class CooldownSkills implements NeoSkill {
 	}
 	
 	public boolean cost(Player p, int hp, int mp) {
-		//TODO cost
-		return false;
+		// Kiểm tra HP
+		if (hp > 0 && p.getHealth() <= hp) {
+			p.sendMessage(Main.ABILITIES_PREFIX + "§cKhông đủ HP! Cần: " + hp);
+			return false;
+		}
+		
+		// Kiểm tra MP (nếu có MMOCore)
+		if (mp > 0 && neo.rpgsystem.integration.mmocore.MMOCoreIntegration.isMMOCoreAvailable()) {
+			try {
+				net.Indyuce.mmocore.api.player.PlayerData data = 
+					net.Indyuce.mmocore.api.player.PlayerData.get(p);
+				if (data.getMana() < mp) {
+					p.sendMessage(Main.ABILITIES_PREFIX + "§cKhông đủ Mana! Cần: " + mp);
+					return false;
+				}
+				// Trừ mana
+				data.giveMana(-mp);
+			} catch (Exception e) {
+				// Fallback - bỏ qua
+			}
+		}
+		
+		// Trừ HP nếu cần
+		if (hp > 0) {
+			p.setHealth(Math.max(0.5, p.getHealth() - hp));
+		}
+		
+		return true;
 	}
 
 }

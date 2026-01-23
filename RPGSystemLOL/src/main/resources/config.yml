@@ -1,0 +1,31 @@
+# RPGSystemLOL Configuration
+
+# Bật/tắt debug mode
+debug: false
+
+# Cài đặt chung
+settings:
+  # Prefix tin nhắn
+  prefix: "&8[&6RPG&8] &r"
+  
+  # Ngôn ngữ (vi/en)
+  language: vi
+
+# Cài đặt kỹ năng
+skills:
+  # Có cho phép cast skill khi đang trong cooldown
+  show-cooldown-message: true
+  
+  # Hệ số damage mặc định
+  default-damage-multiplier: 1.0
+
+# MMOCore Integration
+mmocore:
+  # Sử dụng skill level từ MMOCore
+  use-mmocore-level: true
+  
+  # Sử dụng mana system từ MMOCore
+  use-mmocore-mana: true
+  
+  # Sử dụng party system từ MMOCore
+  use-mmocore-party: true

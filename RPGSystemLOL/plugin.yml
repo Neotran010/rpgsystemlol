@@ -1,0 +1,15 @@
+name: RPGSystemLOL
+version: '1.0.0'
+main: neo.rpgsystemlol.main.Main
+api-version: '1.21'
+description: RPGSystemLOL - He Thong Mon Phai & Ky Nang
+authors: [NeoTran]
+depend: [MythicLib]
+
+commands:
+  rpg:
+    description: PRG commands
+    usage: /rpg
+  skill:
+    description: PRG commands
+    usage: /skill

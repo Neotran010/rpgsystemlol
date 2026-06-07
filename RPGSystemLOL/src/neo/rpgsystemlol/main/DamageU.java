@@ -12,6 +12,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import io.lumine.mythic.lib.api.player.EquipmentSlot;
+
 public class DamageU {
 	
 	public static List<LivingEntity> getTargetsAround(Player p, Location l, double range){
@@ -47,7 +49,7 @@ public class DamageU {
 						net.Indyuce.mmocore.api.player.PlayerData.get(p);
 					net.Indyuce.mmocore.api.player.PlayerData tData = 
 						net.Indyuce.mmocore.api.player.PlayerData.get(target);
-					if (pData.hasParty() && tData.hasParty()) {
+					if (pData.getParty() != null && tData.getParty() != null) {
 						if (pData.getParty().equals(tData.getParty())) {
 							return false; // Cùng party
 						}
@@ -68,7 +70,7 @@ public class DamageU {
 					new io.lumine.mythic.lib.damage.DamageMetadata(rawdamage, 
 						io.lumine.mythic.lib.damage.DamageType.SKILL);
 				io.lumine.mythic.lib.damage.AttackMetadata attack = 
-					new io.lumine.mythic.lib.damage.AttackMetadata(damage, le, mmoCaster.getStatMap().cache());
+					new io.lumine.mythic.lib.damage.AttackMetadata(damage, le, mmoCaster.getStatMap().cache(EquipmentSlot.MAIN_HAND));
 				attack.damage(le);
 				return;
 			} catch (Exception e) {
@@ -139,7 +141,7 @@ public class DamageU {
 	}
 
 	public static void heal(Player p, double amount) {
-		double maxHealth = p.getAttribute(org.bukkit.attribute.Attribute.GENERIC_MAX_HEALTH).getValue();
+		double maxHealth = p.getAttribute(org.bukkit.attribute.Attribute.MAX_HEALTH).getValue();
 		double newHealth = Math.min(p.getHealth() + amount, maxHealth);
 		p.setHealth(newHealth);
 	}
@@ -158,14 +160,14 @@ public class DamageU {
 
 	public static void slow(LivingEntity target, int amplifier, int durationTicks) {
 		target.addPotionEffect(new org.bukkit.potion.PotionEffect(
-			org.bukkit.potion.PotionEffectType.SLOW, durationTicks, amplifier));
+			org.bukkit.potion.PotionEffectType.SLOWNESS, durationTicks, amplifier));
 	}
 
 	public static void addGiamSatThuong(Player p, int durationTicks, double percent) {
 		// Thêm resistance effect tương đương
 		int amplifier = (int) Math.min(4, percent / 20); // 20% = 1 level
 		p.addPotionEffect(new org.bukkit.potion.PotionEffect(
-			org.bukkit.potion.PotionEffectType.DAMAGE_RESISTANCE, durationTicks, amplifier));
+			org.bukkit.potion.PotionEffectType.RESISTANCE, durationTicks, amplifier));
 	}
 
 }

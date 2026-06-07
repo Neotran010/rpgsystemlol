@@ -9,6 +9,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import neo.rpgsystem.abilities.CooldownSkills;
 import neo.rpgsystemlol.main.Main;
@@ -95,7 +96,7 @@ public class TargetStackableNeoSkill extends CooldownSkills {
                     if (c >= 5) {
                         double d = 0;
                         for (int i = 0; i < Math.min(dt.currentStack, 3); i++) {
-                            Particles.spawnParticleColor(Particles.getCirclePoint(p.getLocation().clone().add(0, 1, 0), d, 1), Particle.DUST, color);
+                            Particles.spawnParticleColor(Particles.getCircleLocation(p.getLocation().clone().add(0, 1, 0), new Vector(0,1,0), d, 1), Particle.DUST, color);
                             d += Math.PI * 2 / 3;
                         }
                     }

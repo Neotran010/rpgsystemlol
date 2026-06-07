@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import neo.rpgsystem.abilities.boost.BoostNeoSkill;
 import neo.rpgsystem.abilities.boost.BoostNeoSkillType;
@@ -26,11 +27,13 @@ import neo.rpgsystemlol.main.Particles.neoParticleColor;
 @Deprecated
 public class HumansActive1 extends BoostNeoSkill {
 
-    public HumansActive1() {
+    @Deprecated
+	public HumansActive1() {
         super("humansactive1", "Kiếm Kỹ: Cường Hóa", true, neoParticleColor.YELLOW, 20 * 6, BoostNeoSkillType.NONE);
     }
 
-    @Override
+    @Deprecated
+	@Override
     public void cast(Player p) {
         int level = getSkillLevel(p);
         particle2(p, level);
@@ -112,7 +115,7 @@ public class HumansActive1 extends BoostNeoSkill {
                     r += 0.1;
                 }
                 for (int i = 0; i < 3; i++) {
-                    Location loc2 = Particles.getCirclePoint(loc, d + i * Math.PI * 2 / 3, r);
+                    Location loc2 = Particles.getCircleLocation(loc, new Vector(0,1,0), d + i * Math.PI * 2 / 3, r);
                     Particles.spawnParticleColor(loc2, Particle.DUST_COLOR_TRANSITION, neoParticleColor.AQUA);
                 }
             }
@@ -123,7 +126,8 @@ public class HumansActive1 extends BoostNeoSkill {
         Particles.DoParticle(l.clone().add(0, 1, 0), Particle.HEART, 5, 0.5, 1, 0.5, 0);
     }
 
-    @Override
+    @Deprecated
+	@Override
     public BoostData createBoostData(Player p) {
         List<PotionEffect> potionList = new ArrayList<>();
         int level = getSkillLevel(p);
@@ -144,13 +148,15 @@ public class HumansActive1 extends BoostNeoSkill {
         return new PotionsBoostData(potionList, getBoostTickTime(level));
     }
 
-    public int getBoostTickTime(int level) {
+    @Deprecated
+	public int getBoostTickTime(int level) {
         if (level < 1) level = 1;
         if (level > 10) level = 10;
         return 6 + (level - 1) * 4 / 9; // Linear scale, min 6, max 10
     }
 
-    @Override
+    @Deprecated
+	@Override
     public void onAttack(Player p, LivingEntity target, double damage) {
         super.onAttack(p, target, damage);
         Location loc = target.getLocation().clone().add(0, 1, 0);

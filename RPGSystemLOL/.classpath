@@ -6,7 +6,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/KHANH TRAN/Desktop/Server/1.21.8/bundler/libraries/spigot-api-1.21.8-R0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="C:/Users/KHANH TRAN/Desktop/Server/1.21.8/plugins/MMOCore.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neotr/OneDrive/Desktop/Server/1.21.8_1/bundler/libraries/spigot-api-1.21.8-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neotr/OneDrive/Desktop/Server/1.21.8_1/plugins/MMOCore.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neotr/OneDrive/Desktop/Server/1.21.8_1/plugins/MythicLib-dist-1.7.1-20250905.114829-34.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
